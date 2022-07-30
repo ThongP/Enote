@@ -6,6 +6,6 @@ package Controllers;
  */
 public class Run {
     public static void main(String[] args) {
-        ClientCtr.connect();
+        ClientCtr.connectCheck();
     }
 }

@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controllers;
 
+import DAOs.ServerDAO;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,25 +11,26 @@ import java.net.Socket;
  * @author gbrid
  */
 public class ConnectedThread extends Thread {
-    private Socket socket;
+    private Socket mySocket;
+    private ServerDAO dao;
 
-    public static DataInputStream dis = null;
-    public static DataOutputStream dos = null;
+    public static DataInputStream in = null;
+    public static DataOutputStream out = null;
 
-    public ConnectedThread(Socket socket) {
-        this.socket = socket;
+    public ConnectedThread(Socket mySocket) {
+        this.mySocket = mySocket;
     }
     
     public void run() {
-        System.out.println("Processing: " + socket);
+        System.out.println("Processing: " + mySocket);
         try {
-            dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
+            in = new DataInputStream(mySocket.getInputStream());
+            out = new DataOutputStream(mySocket.getOutputStream());
 
-//            while (!socket.isClosed()) {
-//                String flag = dis.readUTF();
-//                String username;
-//                String pass;
+            while (!mySocket.isClosed()) {
+                String flag = in.readUTF();
+                String user;
+                String pass;
 //                String filename;
 //                File file;
 //                byte[] bytes;
@@ -41,23 +39,25 @@ public class ConnectedThread extends Thread {
 //
 //                String url = "jdbc:sqlserver://localhost:1433;databaseName=Enote;user=sa;password=1;trustServerCertificate=true";
 //                Connection conn = connectDB(url);
-//                switch (flag) {
-//                    case "signIn":
-//                        username = dis.readUTF();
-//                        pass = dis.readUTF();
+                dao = new ServerDAO();
+                dao.connectDB();
+                switch (flag) {
+                    case "Login":
+                        user = in.readUTF();
+                        pass = in.readUTF();
+                        
+                        out.writeUTF(dao.logIn(user,pass));
+
+                        break;
 //
-//                        dos.writeUTF(signIn(username,pass));
 //
-//                        break;
-//
-//
-//                    case "signUp":
-//                        username = dis.readUTF();
-//                        pass = dis.readUTF();
-//
-//                        dos.writeUTF(signUp(username,pass));
-//
-//                        break;
+                    case "Signup":
+                        user = in.readUTF();
+                        pass = in.readUTF();
+                        
+                        out.writeUTF(dao.signUp(user,pass));
+
+                        break;
 //
 //                    case "getNote":
 //                        username = dis.readUTF();
@@ -108,12 +108,12 @@ public class ConnectedThread extends Thread {
 //                        dos.writeUTF("success");
 //                        break;
 //
-//                }
-//            }
+                }
+            }
         } catch (IOException e) {
             System.err.println("Request Processing Error: " + e);
         }
-        System.out.println("Complete processing: " + socket);
+        System.out.println("Complete processing: " + mySocket);
     }
     
 }
