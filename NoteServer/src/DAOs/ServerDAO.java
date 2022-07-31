@@ -1,6 +1,8 @@
 package DAOs;
 
+import Entities.Notes;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -86,5 +88,77 @@ public class ServerDAO {
         }
 
         return res;
+    }
+    
+    public static Notes getNote(String user, int noteID) {
+        Notes note = null;
+        String sql = "";
+        
+        try {
+            sql = "select * from NOTES where USERNAME=? and NOTE_ID=?";
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, user);
+            statement.setInt(2, noteID);
+            ResultSet rs = statement.executeQuery();
+            
+            while(rs.next()) {
+                note = new Notes(rs.getInt("NOTE_ID"), user, rs.getString("FILES_PATH"), rs.getString("FILES_TYPE"));
+            } 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return note;
+    }
+    
+    public static String saveNote(Notes note) {
+        String res = "";
+        String sql = "";
+        
+        try {
+            sql = "insert into NOTES(username, files_path, files_type) values(?, ?, ?)";
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, note.getUser());
+            statement.setString(2, note.getPath());
+            statement.setString(3, note.getType());
+            statement.executeUpdate();
+            
+            res = "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            res = "error";
+        }
+        
+        return res;
+    }
+    
+    public static ArrayList<Notes> getNotes(String user) {
+        String sql = "";
+        ArrayList<Notes> list = new ArrayList<Notes>();
+        
+        try {
+            sql = "select * from NOTES where USERNAME=?";
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, user);
+            ResultSet rs = statement.executeQuery();
+            
+            if(rs != null) {
+                while(rs.next()) {
+                    list.add(
+                        new Notes(
+                            rs.getInt("NOTE_ID"),
+                            rs.getString("USERNAME"),
+                            rs.getString("FILES_PATH"),
+                            rs.getString("FILES_TYPE")
+                        )
+                    );
+                }
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
     }
 }

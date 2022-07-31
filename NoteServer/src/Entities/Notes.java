@@ -17,6 +17,12 @@ public class Notes {
         this.type = type;
     }
 
+    public Notes(String user, String path, String type) {
+        this.user = user;
+        this.path = path;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }

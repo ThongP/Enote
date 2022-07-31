@@ -1,10 +1,15 @@
 package Controllers;
 
 import DAOs.ServerDAO;
+import Entities.Notes;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,11 +36,11 @@ public class ConnectedThread extends Thread {
                 String flag = in.readUTF();
                 String user;
                 String pass;
-//                String filename;
-//                File file;
-//                byte[] bytes;
-//                int noteId;
-//                String absPath = "D:\\MMT\\file\\";
+                String filename;
+                File file;
+                byte[] bytes;
+                int noteID;
+                String absPath = "E:\\Enote\\files\\";
 //
 //                String url = "jdbc:sqlserver://localhost:1433;databaseName=Enote;user=sa;password=1;trustServerCertificate=true";
 //                Connection conn = connectDB(url);
@@ -50,7 +55,6 @@ public class ConnectedThread extends Thread {
 
                         break;
 //
-//
                     case "Signup":
                         user = in.readUTF();
                         pass = in.readUTF();
@@ -59,55 +63,57 @@ public class ConnectedThread extends Thread {
 
                         break;
 //
-//                    case "getNote":
-//                        username = dis.readUTF();
-//                        noteId = dis.readInt();
-//                        Enote note = DB.getEnote(username, noteId);
-//                        file = new File(note.getFilePath());
-//                        bytes = Files.readAllBytes(file.toPath());
-//                        dos.writeInt(bytes.length);
-//                        dos.write(bytes);
-//                        dos.writeUTF(note.getFilePath());
+                    case "getNote":
+                        user = in.readUTF();
+                        noteID = in.readInt();
+                        Notes note = dao.getNote(user, noteID);
+                        file = new File(note.getPath());
+                        bytes = Files.readAllBytes(file.toPath());
+                        out.writeInt(bytes.length);
+                        out.write(bytes);
+                        out.writeUTF(note.getPath());
+
+                        out.writeUTF("success");
+                        break;
 //
-//                        dos.writeUTF("success");
-//                        break;
-//
-//                    case "getNoteList":
-//                        username = dis.readUTF();
-//                        ArrayList<Enote> list = getEnoteList(username);
-//                        ListIterator<Enote> iterate = list.listIterator();
-//
-//                        dos.writeInt(list.size());
-//
-//                        while(iterate.hasNext()){
-//                            Enote temp = iterate.next();
-//                            dos.writeUTF(temp.getUsername());
-//                            dos.writeInt(temp.getId());
-//                            dos.writeUTF(temp.getFilePath());
-//                            dos.writeUTF(temp.getFileType());
-//                        }
-//
-//
-//                        //dos.writeUTF("success");
-//                        break;
-//                    case "saveNote":
-//                        username = dis.readUTF();
-//                        filename = dis.readUTF();
-//                        bytes = null;
-//                        int length = dis.readInt();
-//                        if(length > 0) {
-//                            bytes = new byte[length];
-//                            dis.readFully(bytes);
-//                        }
-//
-//                        FileUtils.writeByteArrayToFile(new File(absPath+filename), bytes);
-//
-//
-//                        saveEnote(new Enote(username,absPath+filename,filename.substring(filename.indexOf(".")+1).trim()));
-//
-//                        dos.writeUTF("success");
-//                        break;
-//
+                    case "saveNote":
+                        user = in.readUTF();
+                        filename = in.readUTF();
+                        bytes = null;
+                        int length = in.readInt();
+                        if(length > 0) {
+                            bytes = new byte[length];
+                            in.readFully(bytes);
+                        }
+
+                        try (FileOutputStream fos = new FileOutputStream(absPath+filename)){
+                            fos.write(bytes);
+                            fos.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        dao.saveNote(new Notes(user,absPath+filename,filename.substring(filename.indexOf(".")+1).trim()));
+
+                        out.writeUTF("success");
+                        break;
+//                        
+                    case "getNotes":
+                        user = in.readUTF();
+                        ArrayList<Notes> list = dao.getNotes(user);
+
+                        out.writeInt(list.size());
+
+                        for(Notes temp : list){
+                            //Notes temp = iterate.next();
+                            out.writeUTF(temp.getUser());
+                            out.writeInt(temp.getId());
+                            out.writeUTF(temp.getPath());
+                            out.writeUTF(temp.getType());
+                        }
+
+                        out.writeUTF("success");
+                        break;
                 }
             }
         } catch (IOException e) {
