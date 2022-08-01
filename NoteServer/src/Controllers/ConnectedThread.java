@@ -41,9 +41,6 @@ public class ConnectedThread extends Thread {
                 byte[] bytes;
                 int noteID;
                 String absPath = "E:\\Enote\\files\\";
-//
-//                String url = "jdbc:sqlserver://localhost:1433;databaseName=Enote;user=sa;password=1;trustServerCertificate=true";
-//                Connection conn = connectDB(url);
                 dao = new ServerDAO();
                 dao.connectDB();
                 switch (flag) {
@@ -67,7 +64,7 @@ public class ConnectedThread extends Thread {
                         user = in.readUTF();
                         noteID = in.readInt();
                         Notes note = dao.getNote(user, noteID);
-                        file = new File(note.getPath());
+                        file = new File(absPath + note.getPath());
                         bytes = Files.readAllBytes(file.toPath());
                         out.writeInt(bytes.length);
                         out.write(bytes);
@@ -93,7 +90,7 @@ public class ConnectedThread extends Thread {
                             e.printStackTrace();
                         }
 
-                        dao.saveNote(new Notes(user,absPath+filename,filename.substring(filename.indexOf(".")+1).trim()));
+                        dao.saveNote(new Notes(user, user+"\\"+filename, filename.substring(filename.indexOf(".")+1).trim()));
 
                         out.writeUTF("success");
                         break;
@@ -105,7 +102,6 @@ public class ConnectedThread extends Thread {
                         out.writeInt(list.size());
 
                         for(Notes temp : list){
-                            //Notes temp = iterate.next();
                             out.writeUTF(temp.getUser());
                             out.writeInt(temp.getId());
                             out.writeUTF(temp.getPath());
