@@ -48,7 +48,4 @@ public class Notes {
     public void setType(String type) {
         this.type = type;
     }
-    
-    
-    
 }
