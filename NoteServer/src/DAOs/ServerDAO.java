@@ -17,7 +17,7 @@ public class ServerDAO {
         Driver myDriver = new com.microsoft.sqlserver.jdbc.SQLServerDriver();
         try {
             DriverManager.registerDriver(myDriver);
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=Enote;user=sa;password=123;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=NOTES;user=sa;password=123;trustServerCertificate=true";
             conn = DriverManager.getConnection(url);
         } catch (Exception e) {
             e.printStackTrace();
