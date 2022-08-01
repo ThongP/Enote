@@ -40,7 +40,7 @@ public class ConnectedThread extends Thread {
                 File file;
                 byte[] bytes;
                 int noteID;
-                String absPath = "E:\\Enote\\files\\";
+                String absPath = "C:\\Notes\\files\\";
                 dao = new ServerDAO();
                 dao.connectDB();
                 switch (flag) {
@@ -60,7 +60,7 @@ public class ConnectedThread extends Thread {
 
                         break;
 //
-                    case "getNote":
+                    case "Getnote":
                         user = in.readUTF();
                         noteID = in.readInt();
                         Notes note = dao.getNote(user, noteID);
@@ -73,7 +73,7 @@ public class ConnectedThread extends Thread {
                         out.writeUTF("success");
                         break;
 //
-                    case "saveNote":
+                    case "Savenote":
                         user = in.readUTF();
                         filename = in.readUTF();
                         bytes = null;
@@ -95,7 +95,7 @@ public class ConnectedThread extends Thread {
                         out.writeUTF("success");
                         break;
 //                        
-                    case "getNotes":
+                    case "Getnotes":
                         user = in.readUTF();
                         ArrayList<Notes> list = dao.getNotes(user);
 

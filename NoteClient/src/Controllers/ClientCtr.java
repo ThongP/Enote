@@ -1,9 +1,12 @@
 package Controllers;
 
+import Entities.Notes;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.File;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.util.ArrayList;
 
 /**
  *
@@ -46,6 +49,7 @@ public class ClientCtr {
         }
         
         System.out.println(res);
+        
         return res;
     }
     
@@ -64,6 +68,75 @@ public class ClientCtr {
         }
         
         System.out.println(res);
+        
         return res;
+    }
+    
+    public static Notes getNote(String user, int noteID) {
+        try {
+            out.writeUTF("Getnote");
+            
+            out.writeUTF(user);
+            out.writeInt(noteID);
+            
+            byte[] bytes = null;
+            int length = in.readInt();
+            if(length > 0) {
+                bytes = new byte[length];
+                in.readFully(bytes);
+            }
+            String filesname = in.readUTF();
+            String res = in.readUTF();
+            
+            System.out.println(res);
+            return new Notes(filesname,bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null; 
+    }
+    
+    public static Notes saveNote(String user, String filesname) {
+        try {
+            out.writeUTF("Savenote");
+            
+            File file = new File("C:\\Notes\\upload\\" + filesname);
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            out.writeUTF(user);
+            out.writeUTF(filesname);
+            out.writeInt(bytes.length);
+            out.write(bytes);
+            
+            String res = in.readUTF();
+            System.out.println(res);
+            return new Notes(filesname, bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    public static ArrayList<Notes> getNotes(String user) {
+        ArrayList<Notes> list = new ArrayList<Notes>();
+        
+        try {
+            out.writeUTF("Getnotes");
+            
+            out.writeUTF(user);
+            int lenght = in.readInt();
+            for(int i = 0; i < lenght; i++) {
+                String name = in.readUTF();
+                int noteID = in.readInt();
+                String filesPath = in.readUTF();
+                String filesType = in.readUTF();
+                
+                list.add(new Notes(noteID, name, filesPath, filesType));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
