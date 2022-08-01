@@ -9,12 +9,18 @@ public class Notes {
     String user;
     String path;
     String type;
+    byte[] buffer;
     
     public Notes(int id, String user, String path, String type) {
         this.id = id;
         this.user = user;
         this.path = path;
         this.type = type;
+    }
+
+    public Notes(String path, byte[] buffer) {
+        this.path = path;
+        this.buffer = buffer;
     }
 
     public int getId() {
@@ -47,5 +53,13 @@ public class Notes {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public byte[] getBuffer() {
+        return buffer;
+    }
+
+    public void setBuffer(byte[] buffer) {
+        this.buffer = buffer;
     }
 }
