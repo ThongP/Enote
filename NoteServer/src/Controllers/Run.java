@@ -12,10 +12,9 @@ public class Run {
     public static void main(String[] args) {
         ServerDAO dao = new ServerDAO();
         dao.connectDB();
-        Notes note = dao.getNote("pepper", 1);
-        System.out.println(note.getUser());
-        System.out.println(note.getPath());
-        System.out.println(note.getType());
+        Notes note = new Notes("pepper", "test.txt", "note");
+        dao.saveNote(note);
+        //System.out.println("");
 //        ArrayList<Notes> note = dao.getNotes("pepper");
 //        for(Notes temp : note){
 //            System.out.println(temp.getUser());
