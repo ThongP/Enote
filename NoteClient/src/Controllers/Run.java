@@ -1,6 +1,7 @@
 package Controllers;
 
 import Entities.Notes;
+import Views.Login;
 import java.util.ArrayList;
 
 /**
@@ -10,12 +11,7 @@ import java.util.ArrayList;
 public class Run {
     public static void main(String[] args) {
         ClientCtr.connectCheck();
-        ArrayList<Notes> note = ClientCtr.getNotes("pepper");
-        for(Notes temp : note) {
-            System.out.println(temp.getUser());
-            System.out.println(temp.getPath());
-            System.out.println(temp.getType());
-            System.out.println();
-        }
+        new Login().setVisible(true);
+        
     }
 }
