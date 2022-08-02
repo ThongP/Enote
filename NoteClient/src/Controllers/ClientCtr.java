@@ -97,20 +97,20 @@ public class ClientCtr {
         return null; 
     }
     
-    public static Notes saveNote(String user, String filesName, String filePath) {
+    public static Notes saveNote(String user, String filesname) {
         try {
             out.writeUTF("Savenote");
             
-            File file = new File(filePath);
+            File file = new File("C:\\Notes\\upload\\" + filesname);
             byte[] bytes = Files.readAllBytes(file.toPath());
             out.writeUTF(user);
-            out.writeUTF(filesName);
+            out.writeUTF(filesname);
             out.writeInt(bytes.length);
             out.write(bytes);
             
             String res = in.readUTF();
             System.out.println(res);
-            return new Notes(filesName, bytes);
+            return new Notes(filesname, bytes);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,8 +134,6 @@ public class ClientCtr {
                 
                 list.add(new Notes(noteID, name, filesPath, filesType));
             }
-            String res = in.readUTF();
-            System.out.println(res);
         } catch (Exception e) {
             e.printStackTrace();
         }
