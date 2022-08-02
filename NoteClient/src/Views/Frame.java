@@ -1,6 +1,9 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package Views;
 
-import Controllers.ClientCtr;
 import java.awt.*;
 import java.io.File;
 import javax.swing.*;
@@ -9,18 +12,16 @@ import javax.swing.*;
  *
  * @author gbrid
  */
-public class Login extends javax.swing.JFrame {
+public class Frame extends javax.swing.JFrame {
 
     /**
      * Creates new form Frame
      */
     String BASE_DIR = (new File("").getAbsolutePath());
-    public Login() {
+    public Frame() {
         initComponents();
         this.setBackground(new Color(0,0,0,0));
     }
-    
-    public static String user;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +40,6 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        ExitBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,23 +50,13 @@ public class Login extends javax.swing.JFrame {
         LoginBtn.setBorder(null);
         LoginBtn.setBorderPainted(false);
         LoginBtn.setContentAreaFilled(false);
-        LoginBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(LoginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 540, -1, 46));
+        getContentPane().add(LoginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, -1, 46));
 
         SignupBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/signup.png"))); // NOI18N
         SignupBtn.setBorder(null);
         SignupBtn.setBorderPainted(false);
         SignupBtn.setContentAreaFilled(false);
-        SignupBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SignupBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(SignupBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, -1, 46));
+        getContentPane().add(SignupBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, -1, 46));
 
         txtUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtUser.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -104,17 +94,6 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/ico.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, -1, -1));
 
-        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/cancel.png"))); // NOI18N
-        ExitBtn.setBorder(null);
-        ExitBtn.setBorderPainted(false);
-        ExitBtn.setContentAreaFilled(false);
-        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(ExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 100, -1, -1));
-
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/test_s.png"))); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 650));
@@ -141,36 +120,6 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ShowpassBtnMouseReleased
 
-    private void SignupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignupBtnActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        Signup su = new Signup();
-        su.setVisible(true);
-    }//GEN-LAST:event_SignupBtnActionPerformed
-
-    private void LoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBtnActionPerformed
-        // TODO add your handling code here:
-        if(!txtUser.getText().isEmpty() && !txtPass.getText().isEmpty()) {
-            user = txtUser.getText();
-            String res = ClientCtr.logIn(txtUser.getText(), txtPass.getText());
-            if(res.equals("success")) {
-                MainScr ms = new MainScr(user);
-                JOptionPane.showMessageDialog(rootPane,res);
-                ms.setVisible(true);
-                this.setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(rootPane,res);
-            }
-        }else {
-            JOptionPane.showMessageDialog(rootPane,"Please fill in all the field!");
-        }
-    }//GEN-LAST:event_LoginBtnActionPerformed
-
-    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_ExitBtnActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -188,27 +137,25 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Frame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ExitBtn;
     private javax.swing.JButton LoginBtn;
     private javax.swing.JButton ShowpassBtn;
     private javax.swing.JButton SignupBtn;
