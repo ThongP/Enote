@@ -33,29 +33,37 @@ public class Addnote extends javax.swing.JFrame {
         SignupBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        LoginBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/login.png"))); // NOI18N
+        LoginBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/bin.png"))); // NOI18N
         LoginBtn.setBorder(null);
         LoginBtn.setBorderPainted(false);
         LoginBtn.setContentAreaFilled(false);
-        getContentPane().add(LoginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, -1, 46));
+        getContentPane().add(LoginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, 80, 80));
 
-        SignupBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/signup.png"))); // NOI18N
+        SignupBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/addition.png"))); // NOI18N
         SignupBtn.setBorder(null);
         SignupBtn.setBorderPainted(false);
         SignupBtn.setContentAreaFilled(false);
-        getContentPane().add(SignupBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, -1, 46));
+        getContentPane().add(SignupBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 70, 60));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 390, 380));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 390, 340));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/back.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 50, 50));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/test_s.png"))); // NOI18N
@@ -104,6 +112,7 @@ public class Addnote extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LoginBtn;
     private javax.swing.JButton SignupBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
