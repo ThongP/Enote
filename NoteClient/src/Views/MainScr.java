@@ -92,7 +92,7 @@ public class MainScr extends javax.swing.JFrame {
         });
         getContentPane().add(AddfileBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 530, 120, 130));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
