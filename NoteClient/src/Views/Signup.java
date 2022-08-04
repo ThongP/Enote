@@ -152,11 +152,17 @@ public class Signup extends javax.swing.JFrame {
 
     private void SignupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignupBtnActionPerformed
         // TODO add your handling code here:
-        if(!txtUser.getText().isEmpty() && !txtPass.getText().isEmpty()) {
-            String res = ClientCtr.signUp(txtUser.getText(), txtPass.getText());
-            JOptionPane.showMessageDialog(rootPane,res);
-        }else {
+        if(txtUser.getText().isEmpty() || txtPass.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane,"Please fill in all the field!");
+        }else if(txtUser.getText().length() < 5) {
+            JOptionPane.showMessageDialog(rootPane,"Username must contains at least 5 characters!");
+        }else if(txtPass.getText().length() < 3) {
+            JOptionPane.showMessageDialog(rootPane,"Password must contains at least 3 characters!");
+        }else if(!txtUser.getText().matches("^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$")) {
+            JOptionPane.showMessageDialog(rootPane,"Username must contains numbers and letters!");
+        }else {
+            String res = ClientCtr.signUp(txtUser.getText(), txtPass.getText());
+            JOptionPane.showMessageDialog(rootPane,res);   
         }
     }//GEN-LAST:event_SignupBtnActionPerformed
 
