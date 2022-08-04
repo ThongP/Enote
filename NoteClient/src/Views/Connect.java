@@ -92,6 +92,7 @@ public class Connect extends javax.swing.JFrame {
         // TODO add your handling code here:
         ClientCtr.connectCheck(txtIP.getText());
         new Login().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ConnectBtnActionPerformed
 
     /**
