@@ -11,10 +11,10 @@ import java.util.concurrent.Executors;
  * @author gbrid
  */
 public class ServerCtr {
-    public static final int NUM_OF_THREAD = 4;
-    public final static int SERVER_PORT = 7;
+    public static final int NUM_OF_THREAD = 5;
+    public final static int SERVER_PORT = 8888;
 
-    public static void main(String[] args) throws IOException {
+    public static void startServer() throws IOException {
         ExecutorService executor = Executors.newFixedThreadPool(NUM_OF_THREAD);
         ServerSocket serverSocket = null;
         try {

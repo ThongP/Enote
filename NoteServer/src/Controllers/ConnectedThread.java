@@ -83,12 +83,18 @@ public class ConnectedThread extends Thread {
                             in.readFully(bytes);
                         }
 
-                        try (FileOutputStream fos = new FileOutputStream(absPath+filename)){
+                        try {
+                            File files = new File(absPath+user+"\\"+filename);
+                            files.getParentFile().mkdirs();
+                            files.createNewFile();
+                            FileOutputStream fos = new FileOutputStream(files,false);
                             fos.write(bytes);
                             fos.close();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        
+                        
 
                         dao.saveNote(new Notes(user, user+"\\"+filename, filename.substring(filename.indexOf(".")+1).trim()));
 

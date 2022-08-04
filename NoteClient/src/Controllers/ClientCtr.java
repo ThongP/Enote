@@ -13,13 +13,14 @@ import java.util.ArrayList;
  * @author gbrid
  */
 public class ClientCtr {
-    public final static String SERVER_IP = "127.0.0.1";
-    public final static int SERVER_PORT = 7;
+    public static String SERVER_IP = "";
+    public final static int SERVER_PORT = 8888;
     public static Socket socket = null;
     public static DataInputStream in = null;
     public static DataOutputStream out = null;
 
-    public static boolean connectCheck() {
+    public static boolean connectCheck(String IP) {
+        SERVER_IP = IP;
         try {
             socket = new Socket(SERVER_IP, SERVER_PORT); // Connect to server
             in = new DataInputStream(socket.getInputStream());
@@ -97,12 +98,33 @@ public class ClientCtr {
         return null; 
     }
     
-    public static Notes saveNote(String user, String filesName, String filePath) {
+    public static Notes saveFileNote(String user, String filesName, String filePath) {
         try {
             out.writeUTF("Savenote");
             
             File file = new File(filePath);
             byte[] bytes = Files.readAllBytes(file.toPath());
+            out.writeUTF(user);
+            out.writeUTF(filesName);
+            out.writeInt(bytes.length);
+            out.write(bytes);
+            
+            String res = in.readUTF();
+            System.out.println(res);
+            return new Notes(filesName, bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    public static Notes saveTextNote(String user, String filesName, byte[] bytes) {
+        try {
+            out.writeUTF("Savenote");
+            
+//            File file = new File(filePath);
+//            byte[] bytes = Files.readAllBytes(file.toPath());
             out.writeUTF(user);
             out.writeUTF(filesName);
             out.writeInt(bytes.length);
