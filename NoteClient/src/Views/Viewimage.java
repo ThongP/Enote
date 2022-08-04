@@ -5,26 +5,54 @@
 package Views;
 
 import Controllers.ClientCtr;
+import Entities.Notes;
 import java.awt.*;
-import java.nio.charset.StandardCharsets;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author gbrid
  */
-public class Addnote extends javax.swing.JFrame {
+public class Viewimage extends javax.swing.JFrame {
 
     /**
      * Creates new form Frame
      */
-    public Addnote(String User) {
+    public Viewimage(String User, String id) {
         initComponents();
         this.setBackground(new Color(0,0,0,0));
+        
+        ID = Integer.parseInt(id);
         user = User;
+        note = ClientCtr.getNote(user, ID);
+        
+        fileName = note.getPath().substring(note.getPath().indexOf(user)+user.length()+1).trim();
+        String temp = fileName.substring(0, fileName.indexOf("."));
+        byte[] bytes = note.getBuffer();
+        
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        try {
+            BufferedImage img = ImageIO.read(in);
+            Image img2 = img.getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
+            jLabel1.setIcon(new ImageIcon(img2));   
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        txtTitle.setText(temp);
+        txtTitle.setEditable(false);
     }
     
+    public static int ID;
     public static String user;
+    public static Notes note;
+    public static String fileName;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,47 +63,27 @@ public class Addnote extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ClearBtn = new javax.swing.JButton();
-        AddBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        NoteTextArea = new javax.swing.JTextArea();
+        DownloadBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ClearBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/bin.png"))); // NOI18N
-        ClearBtn.setBorder(null);
-        ClearBtn.setBorderPainted(false);
-        ClearBtn.setContentAreaFilled(false);
-        ClearBtn.addActionListener(new java.awt.event.ActionListener() {
+        DownloadBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/download.png"))); // NOI18N
+        DownloadBtn.setBorder(null);
+        DownloadBtn.setBorderPainted(false);
+        DownloadBtn.setContentAreaFilled(false);
+        DownloadBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ClearBtnActionPerformed(evt);
+                DownloadBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(ClearBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, 80, 80));
-
-        AddBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/addition.png"))); // NOI18N
-        AddBtn.setBorder(null);
-        AddBtn.setBorderPainted(false);
-        AddBtn.setContentAreaFilled(false);
-        AddBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(AddBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 70, 60));
-
-        NoteTextArea.setColumns(20);
-        NoteTextArea.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        NoteTextArea.setRows(5);
-        jScrollPane1.setViewportView(NoteTextArea);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 390, 360));
+        getContentPane().add(DownloadBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 550, 70, 60));
 
         BackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/back.png"))); // NOI18N
         BackBtn.setBorder(null);
@@ -100,8 +108,11 @@ public class Addnote extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 60, 20));
 
         txtTitle.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtTitle.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTitle.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         txtTitle.setPreferredSize(new java.awt.Dimension(71, 30));
         getContentPane().add(txtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 130, 40));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 390, 360));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/test_s.png"))); // NOI18N
@@ -111,30 +122,25 @@ public class Addnote extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ClearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearBtnActionPerformed
+    private void DownloadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownloadBtnActionPerformed
         // TODO add your handling code here:
-        txtTitle.setText("");
-        NoteTextArea.setText("");
-    }//GEN-LAST:event_ClearBtnActionPerformed
-
-    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        // TODO add your handling code here:
-        String name = txtTitle.getText();
-        String note = NoteTextArea.getText();
-        byte[] bytes = note.getBytes(StandardCharsets.UTF_8);
-        
-        if(NoteTextArea.getText().isEmpty() || txtTitle.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane,"Please fill in all the field!");
-        }else {
+        JFileChooser chosenFile = new JFileChooser();
+        chosenFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chosenFile.showSaveDialog(null);
+        if(!chosenFile.getSelectedFile().getAbsolutePath().isEmpty()) {
             try {
-                ClientCtr.saveTextNote(user, name+".txt", bytes);
+                File files = new File(chosenFile.getSelectedFile().getAbsolutePath()+"\\"+fileName);
+                files.getParentFile().mkdirs();
+                files.createNewFile();
+                FileOutputStream fos = new FileOutputStream(files,false);
                 JOptionPane.showMessageDialog(rootPane,"Success!");
+                fos.write(note.getBuffer());
+                fos.close();
             } catch (Exception e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(rootPane,"Fail!");
             }
         }
-    }//GEN-LAST:event_AddBtnActionPerformed
+    }//GEN-LAST:event_DownloadBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
@@ -158,33 +164,45 @@ public class Addnote extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Addnote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewimage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Addnote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewimage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Addnote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewimage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Addnote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewimage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Addnote("").setVisible(true);
+                new Viewimage("", "").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddBtn;
     private javax.swing.JButton BackBtn;
-    private javax.swing.JButton ClearBtn;
-    private javax.swing.JTextArea NoteTextArea;
+    private javax.swing.JButton DownloadBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }
