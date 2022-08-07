@@ -45,3 +45,5 @@ out/
 ##############################
 .DS_Store
 1
+/NoteClient/dist/
+/NoteServer/dist/
