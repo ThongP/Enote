@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Views;
 
 import java.awt.*;
 import java.io.File;
 import javax.swing.*;
 
-/**
- *
- * @author gbrid
- */
 public class Frame extends javax.swing.JFrame {
 
     /**

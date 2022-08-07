@@ -4,11 +4,6 @@ import Entities.Notes;
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- *
- * @author gbrid
- */
-
 public class ServerDAO {
     public static Connection conn = null;
     public static PreparedStatement statement;

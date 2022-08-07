@@ -1,9 +1,5 @@
 package Entities;
 
-/**
- *
- * @author gbrid
- */
 public class Notes {
     int id;
     String user;

@@ -1,9 +1,5 @@
 package Entities;
 
-/**
- *
- * @author gbrid
- */
 public class Users {
     private String user;
     private String pass;

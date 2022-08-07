@@ -11,10 +11,6 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-/**
- *
- * @author gbrid
- */
 public class ConnectedThread extends Thread {
     private Socket mySocket;
     private ServerDAO dao;

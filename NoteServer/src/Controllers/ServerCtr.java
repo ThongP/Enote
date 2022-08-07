@@ -6,10 +6,6 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- *
- * @author gbrid
- */
 public class ServerCtr {
     public static final int NUM_OF_THREAD = 5;
     public final static int SERVER_PORT = 8888;

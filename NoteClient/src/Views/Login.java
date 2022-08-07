@@ -5,10 +5,6 @@ import java.awt.*;
 import java.io.File;
 import javax.swing.*;
 
-/**
- *
- * @author gbrid
- */
 public class Login extends javax.swing.JFrame {
 
     /**

@@ -8,10 +8,6 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-/**
- *
- * @author gbrid
- */
 public class ClientCtr {
     public static String SERVER_IP = "";
     public final static int SERVER_PORT = 8888;
