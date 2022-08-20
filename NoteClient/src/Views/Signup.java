@@ -119,19 +119,19 @@ public class Signup extends javax.swing.JFrame {
 
     private void ShowpassBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowpassBtnMousePressed
         // TODO add your handling code here:
-        ImageIcon showPass = new ImageIcon(BASE_DIR+"/src/Views/assest/view.png");
+        //ImageIcon showPass = new ImageIcon("/Views/assest/view.png");
         if(!txtPass.getText().isEmpty()) {
             txtPass.setEchoChar((char)0);
-            ShowpassBtn.setIcon(showPass);
+            ShowpassBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/view.png")));
         }
     }//GEN-LAST:event_ShowpassBtnMousePressed
 
     private void ShowpassBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowpassBtnMouseReleased
         // TODO add your handling code here:
-        ImageIcon hidePass = new ImageIcon(BASE_DIR+"/src/Views/assest/invisible.png");
+        //ImageIcon hidePass = new ImageIcon("/Views/assest/invisible.png");
         if(!txtPass.getText().isEmpty()) {
             txtPass.setEchoChar('*');
-            ShowpassBtn.setIcon(hidePass);
+            ShowpassBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/assest/invisible.png")));
         }
     }//GEN-LAST:event_ShowpassBtnMouseReleased
 
